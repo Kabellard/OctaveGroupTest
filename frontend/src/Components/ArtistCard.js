@@ -23,17 +23,20 @@ export default class ArtistCard extends Component {
     let negativityScore = 100 - popularity;
 
     while (popularityScore > 0){
-      if (popularityScore > 20) {
-        starsToDisplay.push(<FontAwesomeIcon icon={faStar} />);
+      if (popularityScore >= 20) {
+        const key = starsToDisplay.length;
+        starsToDisplay.push(<FontAwesomeIcon icon={faStar} key={key} />);
         popularityScore = popularityScore - 20;
       } else if (popularityScore < 20) {
-        starsToDisplay.push(<FontAwesomeIcon icon={faStarHalf} />);
+        const key = starsToDisplay.length;
+        starsToDisplay.push(<FontAwesomeIcon icon={faStarHalf} key={key} />);
         break;
       }
     }
 
     while (negativityScore >= 20) {
-      starsToDisplay.push(<FontAwesomeIcon icon={emptyStar} />);
+      const key = starsToDisplay.length;
+      starsToDisplay.push(<FontAwesomeIcon icon={emptyStar} key={key} />);
       negativityScore = negativityScore - 20;
     }
 
@@ -41,21 +44,14 @@ export default class ArtistCard extends Component {
   }
 
   render() {
-    console.log("this.props", this.props);
-
     // Assigning different attributes to variables
     const imageUrl = (this.props.artistInfo.images.length > 0) ?
       this.props.artistInfo.images[0].url :
       "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg";
 
     const artistName = this.props.artistInfo.name;
-
     const followerCount = this.props.artistInfo.followers.total;
-
     const starsToRender = this.computeStars(this.props.artistInfo.popularity);
-
-
-    console.log("starsToRender", starsToRender);  
 
     return(
       <div className="card">
@@ -66,21 +62,17 @@ export default class ArtistCard extends Component {
             />
           </figure>
         </div>
+
         <div className="card-content has-text-left">
           <p className="title is-4"> {artistName} </p>
           <p className="subtitle is-6">
            {followerCount} followers 
           </p>
-
           <div>
             {starsToRender}
           </div>
-          
-
         </div>
-
       </div>
     )
   }
-
 }

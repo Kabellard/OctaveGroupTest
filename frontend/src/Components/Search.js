@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import SpotifyApi from '../Api/SpotifyApi';
-// import ArtistCard from './ArtistCard.js';
 import ArtistCardOrganizer from './ArtistCardOrganizer.js';
 
 export default class SearchPage extends Component {
@@ -16,32 +15,32 @@ export default class SearchPage extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    if(this.state.searchTerms === '') {
-      this.setState({searchTerms: []});
-      return 0;
-    }
-    
 
-    console.log("Search started");
-    const result = await SpotifyApi.getSearchArtist(this.state.searchTerms);
-    console.log("Search Result", result);
-    this.setState({foundArtist: result.artists.items});
-    console.log('hey', this.state.foundArtist);
-    event.preventDefault();
+    SpotifyApi.getSearchArtist(this.state.searchTerms)
+      .then((r) => {
+        console.log('r: ', JSON.stringify(r, null, 2));
+        this.setState({foundArtist: r.artists.items});
+        console.log('hey', this.state.foundArtist);
+        })
+      .catch((error)=> {
+        console.log(error);
+      });
+
   }
 
   handleChange(event) {
-      this.setState({searchTerms: event.target.value});
+      this.setState({
+        searchTerms: event.target.value,
+        foundArtist: []
+      });
   }
-
 
   render() {
     let searchResults = (this.state.foundArtist.length > 0) ?
       <ArtistCardOrganizer searchResults={this.state.foundArtist} /> :
       '' ;
-
 
     return(
       <div>

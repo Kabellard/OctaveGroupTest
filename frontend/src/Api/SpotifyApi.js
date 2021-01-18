@@ -2,9 +2,11 @@ import axios from 'axios';
 
 const client = axios.create({
     baseURL: 'https://api.spotify.com/',
-    headers: { 
+    timeout: 1000,
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer BQCwnL-8ry2Q4z40BBxdDHCsN9PLV7JU5YtezMTmMLTZjgMV2bMv3Pvvf7v8AfOrY0KmW7a28d6t2E7tKN-zAWB36jtrLSvm8Kr6q1HtUKTMI0y0zNb-Gv5TNf_N4xtq5MPc7nWLl0Mw-6axscveDb6VX-VrJ3dg84w"
+      "Accept": "application/json",
+      "Authorization": "Bearer BQAJoqFr1Cp9t6qcOu0sf86TPhrARCPMG12Y4w5rx5IirxryBiAXMkoXMM6G7J2ELUquuKNZ0IaRgDlQvVVv6pUW9t0h2qFMK0zlLPf720ayoAKdR0p1T6Y9FbsSBjAKPkbxe2LvqClXq_gqghNaChzWoDkhRouaw-8"
      },
 });
 
@@ -17,11 +19,17 @@ const SpotifyApi = {
 
             headers: {},
         }).then((req) => {
+            console.log("axiosReq", req);
+            console.log("headers", req.headers)
             return req.data;
         });
     },
     getSearchArtist(searchTerms) {
-        return this.execute("get", `/v1/search?q=${searchTerms}&type=artist`, { data: null });
+        return this.execute(
+            "get",
+            `/v1/search?q=${searchTerms}&type=artist&offset=0&limit=20`,
+            { data: null }
+        );
     },
     postOrder(order) {
         return this.execute("post", `/post_new_order/`, {
