@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import './main.scss';
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import SearchPage from './Components/Search.js';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import SearchPage from './Views/SearchPageView.js';
+import ArtistAlbumsPage from './Views/ArtistAlbumsPageView';
 
 function App() {
   return (
@@ -10,9 +11,12 @@ function App() {
       <header className="App-header">
         <BrowserRouter>
           <Switch>
-            <Route path="/" exact component={SearchPage}> </Route>
-            <Route> </Route>
-            <Route path="/" render={() => <div> 404 </div>}> </Route>
+            <Route exact path="/" component={SearchPage} />
+            <Route path="/artistSearch/:searchTerms">
+              <SearchPage />
+            </Route>
+            <Route path="/albums/:artistId" component={ArtistAlbumsPage} />
+            <Route path="/" render={() => <div> 404 </div>} />
           </Switch>
         </BrowserRouter>
 

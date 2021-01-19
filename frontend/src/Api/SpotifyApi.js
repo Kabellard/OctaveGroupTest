@@ -2,11 +2,10 @@ import axios from 'axios';
 
 const client = axios.create({
     baseURL: 'https://api.spotify.com/',
-    timeout: 1000,
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": "Bearer BQAJoqFr1Cp9t6qcOu0sf86TPhrARCPMG12Y4w5rx5IirxryBiAXMkoXMM6G7J2ELUquuKNZ0IaRgDlQvVVv6pUW9t0h2qFMK0zlLPf720ayoAKdR0p1T6Y9FbsSBjAKPkbxe2LvqClXq_gqghNaChzWoDkhRouaw-8"
+      "Authorization": "Bearer BQDAlR4J6yC_2pvB1HUuIYsI5yaP3lEgIc-ibFptlYRmqp41M2ArCMH9XctIR0oRkmvL7Z3A_3dU6Q4csDRf0KplKAUVtb4SmiCK7RGsaGZDvWqplgQwJz-zHDbjbSAa5vnXbUInC_TYjcYbIPzfSI9bwmNfpWxDwho"
      },
 });
 
@@ -19,8 +18,6 @@ const SpotifyApi = {
 
             headers: {},
         }).then((req) => {
-            console.log("axiosReq", req);
-            console.log("headers", req.headers)
             return req.data;
         });
     },
@@ -28,6 +25,13 @@ const SpotifyApi = {
         return this.execute(
             "get",
             `/v1/search?q=${searchTerms}&type=artist&offset=0&limit=20`,
+            { data: null }
+        );
+    },
+    getArtistAlbums(artistId) {
+        return this.execute(
+            "get",
+            `/v1/artists/${artistId}/albums`,
             { data: null }
         );
     },
