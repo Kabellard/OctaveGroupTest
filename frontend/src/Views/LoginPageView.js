@@ -3,8 +3,10 @@ import { withRouter } from 'react-router-dom';
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+
 const clientId = "674745874871409cb237f8a694d41778";
-const domain = "http://localhost:3000/";
+
+const domain = window.location.origin
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 // Replace with your app's client ID, redirect URI and desired scopes
