@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Is deployed on: https://octave-technical-test.herokuapp.com/
+
+Production build can be tested locally by running 
+### `yarn build`
+### `yarn run startBuilt`
+
 ## Available Scripts
 
 In the project directory, you can run:
