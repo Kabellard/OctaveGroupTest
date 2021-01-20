@@ -17,14 +17,13 @@ class SearchPage extends Component {
   }
 
     componentDidMount(){
-        console.log("this.props", this.props);
-
         const searchTerms = this.props.match.params.searchTerms;
 
         if ( searchTerms === undefined ){
             return 1;
         } else {
-            SpotifyApi.getSearchArtist(searchTerms)
+            const token = sessionStorage.getItem("token");
+            SpotifyApi.getSearchArtist(searchTerms, token)
                 .then((r) => {
                     // console.log('r: ', JSON.stringify(r, null, 2));
                     this.setState({foundArtist: r.artists.items});
@@ -39,22 +38,9 @@ class SearchPage extends Component {
     }
 
   handleSubmit(event) {
-    // event.preventDefault();
-
-    const { history } = this.props;
-    const searchTerms = this.state.searchTerms;
-    history.push(`/artistSearch/${searchTerms}`);
-
-
-      // SpotifyApi.getSearchArtist(this.state.searchTerms)
-    //   .then((r) => {
-    //     // console.log('r: ', JSON.stringify(r, null, 2));
-    //     this.setState({foundArtist: r.artists.items});
-    //     // console.log('hey', this.state.foundArtist);
-    //     })
-    //   .catch((error)=> {
-    //     console.log(error);
-    //   });
+      const { history } = this.props;
+      const searchTerms = this.state.searchTerms;
+      history.push(`/artistSearch/${searchTerms}`);
 
   }
 
@@ -71,22 +57,21 @@ class SearchPage extends Component {
       '' ;
 
     return(
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input 
-            className="input" 
-            type="text" 
-            placeholder="Search for an Artist"
-            value={this.state.searchTerms}
-            onChange={this.handleChange}
-          />
-        </form>
+        <div>
+            <form onSubmit={this.handleSubmit}>
+                <input
+                    className="input"
+                    type="text"
+                    placeholder="Search for an Artist"
+                    value={this.state.searchTerms}
+                    onChange={this.handleChange}
+                />
+            </form>
 
-        {searchResults}
+            {searchResults}
 
-      </div>
+        </div>
     );
   }
 }
-
 export default withRouter(SearchPage);

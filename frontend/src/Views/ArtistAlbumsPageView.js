@@ -16,7 +16,9 @@ export default class ArtistAlbumsPage extends Component {
     componentDidMount(){
         const artistId = this.props.match.params.artistId;
 
-        SpotifyApi.getArtistAlbums(artistId)
+        const token = sessionStorage.getItem("token");
+
+        SpotifyApi.getArtistAlbums(artistId, token)
             .then((r) => {
                 console.log('r: ', JSON.stringify(r, null, 2));
                 const groupedAlbums = _.chunk(r.items, 4);

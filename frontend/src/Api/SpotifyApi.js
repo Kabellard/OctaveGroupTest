@@ -5,34 +5,39 @@ const client = axios.create({
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": "Bearer BQDAlR4J6yC_2pvB1HUuIYsI5yaP3lEgIc-ibFptlYRmqp41M2ArCMH9XctIR0oRkmvL7Z3A_3dU6Q4csDRf0KplKAUVtb4SmiCK7RGsaGZDvWqplgQwJz-zHDbjbSAa5vnXbUInC_TYjcYbIPzfSI9bwmNfpWxDwho"
+      // "Authorization": "Bearer BQDAlR4J6yC_2pvB1HUuIYsI5yaP3lEgIc-ibFptlYRmqp41M2ArCMH9XctIR0oRkmvL7Z3A_3dU6Q4csDRf0KplKAUVtb4SmiCK7RGsaGZDvWqplgQwJz-zHDbjbSAa5vnXbUInC_TYjcYbIPzfSI9bwmNfpWxDwho"
      },
 });
 
 const SpotifyApi = {
-    async execute(method, resource, data) {
+    async execute(method, resource, data, token) {
         return client({
             method,
             url: resource,
             data,
 
-            headers: {},
+
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
         }).then((req) => {
             return req.data;
         });
     },
-    getSearchArtist(searchTerms) {
+    getSearchArtist(searchTerms, token) {
         return this.execute(
             "get",
             `/v1/search?q=${searchTerms}&type=artist&offset=0&limit=20`,
-            { data: null }
+            { data: null },
+            token
         );
     },
-    getArtistAlbums(artistId) {
+    getArtistAlbums(artistId, token) {
         return this.execute(
             "get",
             `/v1/artists/${artistId}/albums`,
-            { data: null }
+            { data: null },
+            token
         );
     },
     postOrder(order) {
