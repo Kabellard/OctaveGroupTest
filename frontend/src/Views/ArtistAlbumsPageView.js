@@ -1,15 +1,15 @@
 import React, {Component} from "react";
 import SpotifyApi from '../Api/SpotifyApi';
-import _ from "lodash";
 import AlbumCard from '../Components/AlbumCards/AlbumCard';
+import {withRouter} from 'react-router-dom';
 
 
-export default class ArtistAlbumsPage extends Component {
+class ArtistAlbumsPage extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            splitAlbums: []
+            albums: []
         };
     }
 
@@ -21,12 +21,15 @@ export default class ArtistAlbumsPage extends Component {
         SpotifyApi.getArtistAlbums(artistId, token)
             .then((r) => {
                 console.log('r: ', JSON.stringify(r, null, 2));
-                const groupedAlbums = _.chunk(r.items, 4);
-                this.setState({splitAlbums: groupedAlbums});
+                this.setState({albums: r.items});
 
             })
             .catch((error)=> {
                 console.log(error);
+                if (error.response.status === 401) {
+                    alert("Session expired, please log in again");
+                    this.props.history.push('/');
+                }
             });
     }
 
@@ -38,28 +41,34 @@ export default class ArtistAlbumsPage extends Component {
 
         return(
             <div>
-                <div className="container has-text-left">
-                    <p className="title is-4"> {artistName} </p>
-                    <p className="subtitle is-6"> {ALBUMS} </p>
-
+                <div className="container has-text-left"
+                    style={{
+                        paddingTop: "2.5vh",
+                        paddingBottom: "2.5vh"
+                }}>
+                    <p className="title is-2 has-text-white"> {artistName} </p>
+                    <p className="subtitle is-3 has-text-white"> {ALBUMS} </p>
                 </div>
 
-                <table className="table">
-                    <tbody>
-                    {this.state.splitAlbums.map((albumsGroup, index) => (
-                        <tr key={index}>
-                            {albumsGroup.map((album, index) => (
-                                <td key={index} style={{width:"25%"}}>
-                                    <AlbumCard
-                                        albumInfo={album}
-                                    />
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                <div className="container">
+                    <div className="columns is-multiline is-mobile">
+                        {this.state.albums.map((album, index) => (
+                            <div className="column is-one-quarter-desktop is-half-mobile is-one-third-tablet is-fullwidth"
+                                 style={{
+                                     display:"grid"
+                                 }}
+                                 key={index}>
+                                <AlbumCard
+                                    albumInfo={album}
+                                    key={index}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
 }
+
+export default withRouter(ArtistAlbumsPage);

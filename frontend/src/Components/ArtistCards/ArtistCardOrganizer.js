@@ -15,25 +15,22 @@ export default class ArtistCardOrganizer extends Component {
 
   render() {
     return(
-      <div>
-        <table className="table">
-          <tbody>
-            {this.state.groupedResults.map((group, index) => (
-              <tr key={index}> 
-                {group.map((searchResult, index) => (
-                  <td key={index} style={{width:"25%"}}> 
-                    <ArtistCard 
-                      artistInfo={searchResult} 
-                    />  
-                  </td>
-                ))} 
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="container">
+        <div className="columns is-multiline is-mobile">
+          {this.props.searchResults.map((result, index) => (
+            <div className="column is-one-quarter-desktop is-half-mobile is-one-third-tablet"
+                 style={{
+                   display:"grid"
+                 }}
+                 key={index}>
+              <ArtistCard
+                  artistInfo={result}
+                  key={index}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     )
-
   }
-
 }

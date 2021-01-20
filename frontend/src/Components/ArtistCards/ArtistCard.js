@@ -64,7 +64,7 @@ class ArtistCard extends Component {
     }
 
     return(
-      <div className="card">
+      <div className="card is-clickable">
         <div className="card-image">
           <figure className="image is-4by3">
             <img
@@ -75,9 +75,9 @@ class ArtistCard extends Component {
           </figure>
         </div>
 
-        <div className="card-content has-text-left">
-          <p className="title is-4"> {artistName} </p>
-          <p className="subtitle is-6">
+        <div className="card-content has-text-left is-hoverable">
+          <p className="title is-5"> {artistName} </p>
+          <p className="subtitle is-7">
            {followerCount} followers 
           </p>
           <div>

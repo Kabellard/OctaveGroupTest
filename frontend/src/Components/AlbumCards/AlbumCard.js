@@ -40,23 +40,31 @@ export default class AlbumCard extends Component {
                 </div>
 
                 <div className="card-content has-text-left">
-                    <p className="title is-4"> {albumName} </p>
+                    <p className="has-text-weight-bold is-size-6"> {albumName} </p>
                     {artistNames.map((name, index) => (
-                        <p className="subtitle is-6" key={index}>
+                        <p className="" key={index}>
                             {name}
                         </p>
                     ))}
                     <br/>
 
 
-                    <p className="subtitle is-6">
+                    <p className="">
                         {releaseDate}
                     </p>
-                    <p className="subtitle is-6">
+                    <p className="">
                         {numberOfTracks} {TRACK_STRING}
                     </p>
-                    <a href={previewLink}>Preview on Spotify</a>
 
+                </div>
+
+
+                <div className="hero is-light is-fullwidth">
+                    <div className="hero-body">
+                        <div className="container">
+                            <a href={previewLink}>Preview on Spotify</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

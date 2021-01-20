@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { withRouter } from 'react-router-dom';
-import _ from "lodash";
+import { faSpotify } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const clientId = "674745874871409cb237f8a694d41778";
 const domain = "http://localhost:3000/";
@@ -8,11 +9,9 @@ const domain = "http://localhost:3000/";
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 // Replace with your app's client ID, redirect URI and desired scopes
 const redirectUri = `${domain}`;
-const scopes = [
-    "user-read-currently-playing",
-    "user-read-playback-state",
-];
+
 // Get the hash of the url
+// Token Hash Function inspired by: https://levelup.gitconnected.com/how-to-build-a-spotify-player-with-react-in-15-minutes-7e01991bc4b6
 const hash = window.location.hash
     .substring(1)
     .split("&")
@@ -50,17 +49,22 @@ class LoginPage extends Component {
         }
     }
 
-    // TODO SCOPE URL ELEMENT
-    // &scope=${scopes.join("%20")}
-
     render() {
         return(
-            <div>
+            <div className="container is-vcentered" style={{
+                marginTop: "30vh"
+            }}>
                 <a
-                    className="button is-primary is-rounded"
-                    href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
+                    className="button is-success is-rounded is-large"
+                    href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&show_dialog=true`}
                 >
-                    Login to Spotify
+                    <span className="icon is-large">
+                        <FontAwesomeIcon icon={faSpotify} />
+                    </span>
+                    <span>
+                        Login to Spotify
+                    </span>
+
                 </a>
             </div>
         );
